@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import LoginLogo from "../LoginPage/LoginLogo";
 import FormSignUp from "./FormSignUp";
@@ -8,7 +9,11 @@ export default function SignUpPage() {
         <Container>
             <LoginLogo/>
             <FormSignUp/>
-            <SignUpText>Já tem uma conta? Faça login!</SignUpText>
+
+            <Link to="/">
+                <SignUpText>Já tem uma conta? Faça login!</SignUpText>
+            </Link>
+            
         </Container>
     );
 }

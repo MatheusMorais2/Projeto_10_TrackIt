@@ -1,12 +1,25 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import WideInput from '../../styles/wideInput';
 
 export default function FormLogin() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     return (
         <Container>
-            <WideInput placeholder='email'/>
+            <form>
+                <WideInput placeholder='email'
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    type='email'
+                />
 
-            <WideInput placeholder='senha'/>
+                <WideInput placeholder='senha'
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    type='password'
+                />
+            </form>
 
             <Button>
                 Entrar

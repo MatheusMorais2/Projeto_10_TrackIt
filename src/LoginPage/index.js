@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import LoginLogo from './LoginLogo';
 import FormLogin from './FormLogin';
+import { Link } from 'react-router-dom';
 
 export default function LoginPage() {
 
@@ -8,7 +9,11 @@ export default function LoginPage() {
         <Container>
             <LoginLogo/>
             <FormLogin/>
-            <SignUpText>Não tem uma conta? Cadastre-se!</SignUpText>
+            <Link to="/cadastro">
+                <SignUpText>
+                    Não tem uma conta? Cadastre-se!
+                </SignUpText>
+            </Link>
         </Container>
     );
 };

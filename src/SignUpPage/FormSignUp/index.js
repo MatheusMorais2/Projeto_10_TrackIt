@@ -1,15 +1,68 @@
+import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+
 import WideInput from "../../styles/wideInput";
+import { useNavigate } from "react-router-dom";
 
 export default function FormSignUp () {
+
+    const [signUpData, setSignUpData] = useState({email: '', name: '', image: '', password: ''});
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    function signUp(e) {
+
+        e.preventDefault();
+        setLoading(true);
+
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',
+            signUpData);
+
+        promise.then( () => {
+            navigate('/', { replace: true });
+        });
+        
+        promise.catch( erro => {
+            console.log('erro: ', erro)
+            setLoading(false);
+        });
+    }
+
     return (
         <Container>
-            <WideInput placeholder='email'/>
-            <WideInput placeholder='senha' />
-            <WideInput placeholder='nome' />
-            <WideInput placeholder='foto' />
+            <form onSubmit={signUp}>
 
-            <Button>Cadastrar</Button>
+                <WideInput placeholder='email'
+                    onChange={e => setSignUpData({...signUpData, email: e.target.value})}
+                    value={signUpData.email}
+                    type='email'
+                    disabled={loading}
+                />
+
+                <WideInput placeholder='senha'
+                    onChange={e => setSignUpData({...signUpData, password: e.target.value})}
+                    value={signUpData.password}
+                    type='password'
+                    disabled={loading}
+                />
+
+                <WideInput placeholder='nome'
+                    onChange={e => setSignUpData({...signUpData, name: e.target.value})}
+                    value={signUpData.name}
+                    type='text'
+                    disabled={loading}
+                />
+
+                <WideInput placeholder='foto'
+                    onChange={e => setSignUpData({...signUpData, image: e.target.value})}
+                    value={signUpData.image}
+                    type='url'
+                    disabled={loading}
+                />
+
+                <Button type='submit'>Cadastrar</Button>
+            </form>
         </Container>
 
     );
