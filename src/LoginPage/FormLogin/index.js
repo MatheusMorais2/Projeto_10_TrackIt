@@ -1,15 +1,12 @@
 import styled from 'styled-components';
+import WideInput from '../../styles/wideInput';
 
 export default function FormLogin() {
     return (
         <Container>
-            <Input placeholder='email'>
+            <WideInput placeholder='email'/>
 
-            </Input>
-
-            <Input placeholder='senha'>
-
-            </Input>
+            <WideInput placeholder='senha'/>
 
             <Button>
                 Entrar
@@ -25,7 +22,7 @@ const Container = styled.div`
     padding: 0 36px;
 `;
 
-const Input = styled.input`
+/* const Input = styled.input`
     width: 100%;
     height: 45px;
     border: 1px solid #D4D4D4;
@@ -39,7 +36,7 @@ const Input = styled.input`
         color: #DBDBDB;
         padding-left: 11px;
     }
-`;
+`; */
 
 const Button = styled.button`
     width: 100%;

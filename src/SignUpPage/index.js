@@ -2,7 +2,7 @@ import styled from "styled-components";
 import LoginLogo from "../LoginPage/LoginLogo";
 import FormSignUp from "./FormSignUp";
 
-export default function SignUp() {
+export default function SignUpPage() {
 
     return (
         <Container>
