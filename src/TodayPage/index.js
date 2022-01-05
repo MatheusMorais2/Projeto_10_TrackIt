@@ -1,6 +1,7 @@
 import Header from "../Header";
 import styled from "styled-components";
 import HabitToday from "./HabitToday";
+import Footer from "../Footer";
 
 export default function TodayPage() {
 
@@ -20,6 +21,7 @@ export default function TodayPage() {
                     </Main>
 
                 </Container>
+                <Footer/>
             </>
     );
 };
