@@ -1,6 +1,14 @@
+import Header from "../Header";
+
 export default function Habits() {
 
     return (
-        <div>Habits</div>
+        <>
+            <Header />
+{/*             <Container>
+
+            </Container>
+            <Footer></Footer> */}
+        </>
     );
 }
