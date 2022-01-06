@@ -2,6 +2,7 @@ import Header from "../Header";
 import styled from "styled-components";
 import HabitCreation from "./HabitCreation";
 import Habit from "./Habit";
+import Footer from "../Footer";
 
 export default function HabitsPage() {
     const noHabitText = `Você não tem nenhum hábito\n cadastrado ainda. Adicione um hábito\n para começar a trackear!`;
@@ -30,7 +31,7 @@ export default function HabitsPage() {
                 </NoHabit>
 
             </Container>
-{/*             <Footer/> */}
+            <Footer/>
         </>
     );
 };

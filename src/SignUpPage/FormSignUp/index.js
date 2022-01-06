@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import WideInput from "../../styles/wideInput";
-import { useNavigate } from "react-router-dom";
+import LoadingButton from "../../LoadingAnimation";
 
 export default function FormSignUp () {
 
@@ -24,7 +25,8 @@ export default function FormSignUp () {
         });
         
         promise.catch( erro => {
-            console.log('erro: ', erro)
+            console.log('erro: ', erro);
+            alert('Falha ao cadastrar');
             setLoading(false);
         });
     }
@@ -61,7 +63,9 @@ export default function FormSignUp () {
                     disabled={loading}
                 />
 
-                <Button type='submit'>Cadastrar</Button>
+                <Button type='submit' disabled={loading}>
+                    {loading ? <LoadingButton/> : 'Cadastrar' }
+                </Button>
             </form>
         </Container>
 

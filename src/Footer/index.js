@@ -1,17 +1,24 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
         <Fixed>
             <Container>
                 <Button>
-                    Hábitos
+                    <Link to='/habitos'>
+                        Hábitos
+                    </Link>
                 </Button>
 
-                <ProgressBar />
+                <Link to='/hoje'>
+                    <ProgressBar />
+                </Link>
 
                 <Button>
-                    Histórico
+                    <Link to='/historico'>
+                        Histórico
+                    </Link>
                 </Button>
             </Container>
         </Fixed>
