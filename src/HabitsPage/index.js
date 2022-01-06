@@ -3,10 +3,12 @@ import styled from "styled-components";
 import HabitCreation from "./HabitCreation";
 import Habit from "./Habit";
 import Footer from "../Footer";
+import { useState } from "react";
 
 export default function HabitsPage() {
     const noHabitText = `Você não tem nenhum hábito\n cadastrado ainda. Adicione um hábito\n para começar a trackear!`;
     const habitsArr = ['Ler', 'dormir', 'fazer nada'];
+    const [showCreationMenu, setShowCreationMenu] = useState(false);
 
     return (
         <>
@@ -17,10 +19,10 @@ export default function HabitsPage() {
                     <span>
                         Meus hábitos
                     </span>
-                    <AddHabit>+</AddHabit>
+                    <AddHabit onClick={() => setShowCreationMenu(!showCreationMenu)}>+</AddHabit>
                 </HeadBar>
 
-                <HabitCreation/>
+                {showCreationMenu && <HabitCreation setShowCreationMenu={setShowCreationMenu}/>}
 
                 <Habits>
                     {habitsArr.map( (elem, index) => <Habit key={index} info={elem}/>)}
@@ -38,6 +40,7 @@ export default function HabitsPage() {
 
 const Container = styled.div`
     padding: 92px 17px;
+    background-color: #E5E5E5;
 
 `;
 
