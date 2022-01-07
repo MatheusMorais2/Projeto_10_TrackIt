@@ -9,7 +9,6 @@ import UserContext from '../../contexts/userContext';
 
 export default function FormLogin() {
     const navigate = useNavigate();
-
     const { userData, setUserData} = useContext(UserContext);
     const [loginData, setLoginData] = useState( {email: '', password: ''});
     const [loading, setLoading] = useState(false);
@@ -22,13 +21,15 @@ export default function FormLogin() {
             loginData);
 
         promise.then((response) => {
-            setUserData({name: response.data.name, image: response.data.image, token: response.data.token });
-/*             setUserData({ ...userData, image: response.data.image });
-            setUserData({ ...userData, token: response.data.token }); */
-            console.log('userData-pos: ', userData);
+            setUserData({
+                name: response.data.name, 
+                image: response.data.image, 
+                token: response.data.token 
+            });
             setLoading(false);
-            navigate('/hoje', { replace: true });
-        });
+            navigate('/hoje', { replace: true })
+            }
+        );
 
         promise.catch(erro => {
             console.log('erro: ', erro);
@@ -60,19 +61,6 @@ export default function FormLogin() {
         </Container>
     );
 };
-
-/*
-setUserData({ name: response.data.name, 
-                image: response.data.image, 
-                token: response.data.token
-            });
-console.log('userData-pre: ', userData);
-console.log('name: ', response.data.name);
-console.log('image: ', response.data.image);
-console.log('token: ', response.data.token);
-const teste = { ...userData, name: response.data.name };
-console.log('teste: ', teste); */
-
 
 const Container = styled.div`
     gap: 6px;

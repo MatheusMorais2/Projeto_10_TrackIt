@@ -1,17 +1,33 @@
 import styled from "styled-components";
-import DaysOfTheWeek from "../DaysOfTheWeek";
+import { useContext } from 'react';
+import UserContext from "../contexts/userContext";
 
 export default function Habit( {info} ) {
+    const { id, name, days } = info;
+    const { userData } = useContext(UserContext);
     const daysOfTheWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+
+    function handleDelete() {
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+            {headers: { 'Authorization': `Bearer ${userData.token}`} 
+            }   
+        )
+        promise.then(response => console.log(response));
+        promise.catch(erro => console.log(erro));
+    }
+
     return (
         <Container>
-            <Title>{info}</Title>
-            <Delete>
+            <Title>{name}</Title>
+            <Delete onClick={handleDelete}>
                 <ion-icon name="trash-outline"></ion-icon>
             </Delete>
             <Days >
                 {daysOfTheWeek.map(
-                    (elem, index) => <Day key={index}>{elem}</Day>
+                    (elem, index) => 
+                        days.includes(index) 
+                            ? <Day highlight={true} key={index}>{elem}</Day> 
+                            : <Day highlight={false} key={index}>{elem}</Day>
                 )}
             </Days>
         </Container>
@@ -61,8 +77,8 @@ const Day = styled.button`
     border: 1px solid #D4D4D4;
     border-radius: 5px;
     text-align: center;
-    color: #DBDBDB;
-    background-color: #fff ;
+    color: ${props => props.highlight ? '#FFFFFF' : '#DBDBDB'} ;
+    background-color: ${props => props.highlight ? '#CFCFCF' : '#FFFFFF'} ;
     font-family: 'Lexend Deca';
     font-weight: 400;
     font-size: 19.98px;

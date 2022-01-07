@@ -4,9 +4,11 @@ import styled from "styled-components";
 
 import WideInput from "../../styles/wideInput";
 import UserContext from "../../contexts/userContext.js";
+import HabitsContext from "../../contexts/habitsContext";
 
-export default function HabitCreation({ setShowCreationMenu}) {
-
+export default function HabitCreation({ getHabits, setShowCreationMenu}) {
+    
+    const { arrHabits, setArrHabits } = useContext(HabitsContext);
     const { userData, setUserData } = useContext(UserContext);
     const [createHabit, setCreateHabit] = useState({name:'', days: []});
     const [loading, setLoading] = useState(false);
@@ -27,9 +29,11 @@ export default function HabitCreation({ setShowCreationMenu}) {
         );
 
         promise.then(response => {
+            getHabits(userData, arrHabits, setArrHabits);
             setCreateHabit({ name: '', days: [] });
             setLoading(false);
             setShowCreationMenu(false);
+            
         });
 
         promise.catch(error => console.log(error));

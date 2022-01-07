@@ -1,10 +1,20 @@
+import { useContext, useEffect } from "react";
+
 import Header from "../Header";
 import styled from "styled-components";
 import HabitToday from "./HabitToday";
 import Footer from "../Footer";
+import getHabits from "../scripts/getHabits";
+import UserContext from "../contexts/userContext";
+import HabitsContext from "../contexts/habitsContext";
 
 export default function TodayPage() {
 
+    const { userData, setUserData } = useContext(UserContext);
+    const { arrHabits, setArrHabits } = useContext(HabitsContext);
+    console.log('###########################');
+    console.log('getHabits today page');
+    useEffect(() => getHabits(userData, arrHabits, setArrHabits), []);
     const habitsToday = [{title : 'ler 1 livro', streak: 4, record: 7},
         { title: 'ler 1 livro', streak: 4, record: 7 },
         { title: 'ler 1 livro', streak: 4, record: 7 }

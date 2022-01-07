@@ -1,14 +1,22 @@
-import Header from "../Header";
 import styled from "styled-components";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+
+import HabitsContext from "../contexts/habitsContext";
+import UserContext from "../contexts/userContext";
 import HabitCreation from "./HabitCreation";
+import Header from "../Header";
 import Habit from "./Habit";
 import Footer from "../Footer";
-import { useState } from "react";
+import getHabits from "../scripts/getHabits";
 
 export default function HabitsPage() {
     const noHabitText = `Você não tem nenhum hábito\n cadastrado ainda. Adicione um hábito\n para começar a trackear!`;
-    const habitsArr = ['Ler', 'dormir', 'fazer nada'];
+    const { userData } = useContext(UserContext);
+    const { arrHabits, setArrHabits} = useContext(HabitsContext);
     const [showCreationMenu, setShowCreationMenu] = useState(false);
+
+    useEffect(() => getHabits(userData, arrHabits, setArrHabits), []);
 
     return (
         <>
@@ -22,15 +30,21 @@ export default function HabitsPage() {
                     <AddHabit onClick={() => setShowCreationMenu(!showCreationMenu)}>+</AddHabit>
                 </HeadBar>
 
-                {showCreationMenu && <HabitCreation setShowCreationMenu={setShowCreationMenu}/>}
+                {showCreationMenu && <HabitCreation getHabits={getHabits} setShowCreationMenu={setShowCreationMenu}/>}
 
-                <Habits>
-                    {habitsArr.map( (elem, index) => <Habit key={index} info={elem}/>)}
-                </Habits>
-
-                <NoHabit>
-                    {noHabitText}
-                </NoHabit>
+                {arrHabits.length !== 0 
+                    ? <Habits>
+                            {arrHabits.map( (elem, index) => <Habit key={index} info={elem}/>)}
+                        </Habits>
+                    : ''
+                }
+                {arrHabits.length === 0
+                    ? <NoHabit>
+                            {noHabitText}
+                        </NoHabit>
+                    : ''
+                }
+                
 
             </Container>
             <Footer/>
@@ -39,7 +53,9 @@ export default function HabitsPage() {
 };
 
 const Container = styled.div`
-    padding: 92px 17px;
+    height: 100%;
+    min-height: 100vh;
+    padding: 92px 17px 101px 17px;
     background-color: #E5E5E5;
 
 `;

@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 export default function Header() {
     const { userData, setUserData } = useContext(UserContext);
-    console.log('userData: ', userData);
+    console.log('userData header: ', userData);
     return (
         <Container>
             <Span>TrackIt</Span>
