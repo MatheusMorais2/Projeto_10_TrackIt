@@ -1,25 +1,31 @@
 import styled from "styled-components";
+import axios from "axios";
 import { useContext } from 'react';
-import UserContext from "../contexts/userContext";
+import UserContext from "../../contexts/userContext";
+import HabitsContext from "../../contexts/habitsContext";
+import getHabits from "../../scripts/getHabits";
 
 export default function Habit( {info} ) {
     const { id, name, days } = info;
     const { userData } = useContext(UserContext);
+    const { arrHabits, setArrHabits } = useContext(HabitsContext);
     const daysOfTheWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
     function handleDelete() {
+        const confirm = window.confirm('Tem certeza que deseja apagar?');
+        if (!confirm) return null; 
         const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
             {headers: { 'Authorization': `Bearer ${userData.token}`} 
             }   
         )
-        promise.then(response => console.log(response));
-        promise.catch(erro => console.log(erro));
+        promise.then(() => getHabits(userData, arrHabits, setArrHabits));
+        promise.catch(erro => console.log('deumerda ',erro));
     }
 
     return (
         <Container>
             <Title>{name}</Title>
-            <Delete onClick={handleDelete}>
+            <Delete onClick={ handleDelete}>
                 <ion-icon name="trash-outline"></ion-icon>
             </Delete>
             <Days >

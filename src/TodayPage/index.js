@@ -10,10 +10,8 @@ import HabitsContext from "../contexts/habitsContext";
 
 export default function TodayPage() {
 
-    const { userData, setUserData } = useContext(UserContext);
+    const { userData} = useContext(UserContext);
     const { arrHabits, setArrHabits } = useContext(HabitsContext);
-    console.log('###########################');
-    console.log('getHabits today page');
     useEffect(() => getHabits(userData, arrHabits, setArrHabits), []);
     const habitsToday = [{title : 'ler 1 livro', streak: 4, record: 7},
         { title: 'ler 1 livro', streak: 4, record: 7 },

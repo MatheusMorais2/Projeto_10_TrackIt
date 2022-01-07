@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 
 import HabitsContext from "../contexts/habitsContext";
 import UserContext from "../contexts/userContext";
@@ -15,6 +14,7 @@ export default function HabitsPage() {
     const { userData } = useContext(UserContext);
     const { arrHabits, setArrHabits} = useContext(HabitsContext);
     const [showCreationMenu, setShowCreationMenu] = useState(false);
+    const [createHabit, setCreateHabit] = useState({ name: '', days: [] });
 
     useEffect(() => getHabits(userData, arrHabits, setArrHabits), []);
 
@@ -30,7 +30,7 @@ export default function HabitsPage() {
                     <AddHabit onClick={() => setShowCreationMenu(!showCreationMenu)}>+</AddHabit>
                 </HeadBar>
 
-                {showCreationMenu && <HabitCreation getHabits={getHabits} setShowCreationMenu={setShowCreationMenu}/>}
+                {showCreationMenu && <HabitCreation createHabit={createHabit} setCreateHabit={setCreateHabit} setShowCreationMenu={setShowCreationMenu}/>}
 
                 {arrHabits.length !== 0 
                     ? <Habits>

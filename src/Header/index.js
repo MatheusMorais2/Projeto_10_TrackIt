@@ -3,8 +3,7 @@ import UserContext from '../contexts/userContext';
 import { useContext } from 'react';
 
 export default function Header() {
-    const { userData, setUserData } = useContext(UserContext);
-    console.log('userData header: ', userData);
+    const { userData} = useContext(UserContext);
     return (
         <Container>
             <Span>TrackIt</Span>

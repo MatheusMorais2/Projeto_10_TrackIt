@@ -5,12 +5,13 @@ import styled from "styled-components";
 import WideInput from "../../styles/wideInput";
 import UserContext from "../../contexts/userContext.js";
 import HabitsContext from "../../contexts/habitsContext";
+import getHabits from "../../scripts/getHabits";
 
-export default function HabitCreation({ getHabits, setShowCreationMenu}) {
+export default function HabitCreation({ createHabit, setCreateHabit, setShowCreationMenu}) {
     
     const { arrHabits, setArrHabits } = useContext(HabitsContext);
-    const { userData, setUserData } = useContext(UserContext);
-    const [createHabit, setCreateHabit] = useState({name:'', days: []});
+    const { userData} = useContext(UserContext);
+
     const [loading, setLoading] = useState(false);
     const daysOfTheWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
@@ -28,15 +29,21 @@ export default function HabitCreation({ getHabits, setShowCreationMenu}) {
             }
         );
 
-        promise.then(response => {
+        promise.then( () => {
             getHabits(userData, arrHabits, setArrHabits);
             setCreateHabit({ name: '', days: [] });
             setLoading(false);
             setShowCreationMenu(false);
-            
         });
 
-        promise.catch(error => console.log(error));
+        promise.catch( () => {
+            setLoading(false);
+            alert('Algo deu errado ao criar o habito');
+        });
+    };
+
+    function handleCancel() {
+        setShowCreationMenu(false);
     };
 
     return (
@@ -52,14 +59,15 @@ export default function HabitCreation({ getHabits, setShowCreationMenu}) {
                 <Days >
                     {daysOfTheWeek.map(
                         (elem, index) =>
-                            <Day onClick={() => handleClickDay(index)} disabled={loading} key={index}>{elem}</Day>
-                        
+                            createHabit.days.includes(index) 
+                            ? <Day onClick={() => handleClickDay(index)} highlight={true} disabled={loading} key={index}>{elem}</Day>
+                            : <Day onClick={() => handleClickDay(index)} highlight={false} disabled={loading} key={index}>{elem}</Day> 
                     )}
                 </Days>
                 
 
                 <Buttons>
-                    <Cancel type="reset" disabled={loading}>Cancelar</Cancel >
+                    <Cancel type="reset" onClick={handleCancel} disabled={loading}>Cancelar</Cancel >
                     <Save type='submit' disabled={loading}>Salvar</Save>
                 </Buttons>
 
@@ -123,11 +131,13 @@ const Day = styled.div`
     height: 30px;
     border: 1px solid #D4D4D4;
     border-radius: 5px;
-    text-align: center;
-    color: #DBDBDB;
-    background-color: #fff ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${props => props.highlight ? '#FFFFFF' : '#DBDBDB'} ;
+    background-color: ${props => props.highlight ? '#CFCFCF' : '#FFFFFF'} ;
     font-family: 'Lexend Deca';
     font-weight: 400;
-    font-size: 19.98px;
+    font-size: 20px;
 `;
 
