@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 import WideInput from '../../styles/wideInput';
 import LoadingButton from "../../LoadingAnimation";
+
 import UserContext from '../../contexts/userContext';
 
 export default function FormLogin() {
     const navigate = useNavigate();
     const { setUserData} = useContext(UserContext);
+
     const [loginData, setLoginData] = useState( {email: '', password: ''});
     const [loading, setLoading] = useState(false);
 
@@ -26,16 +28,15 @@ export default function FormLogin() {
                 image: response.data.image, 
                 token: response.data.token 
             });
-            setLoading(false);
-            navigate('/hoje', { replace: true })
-            }
-        );
+
+            navigate('/hoje', { replace: true });
+        });
 
         promise.catch(erro => {
             console.log('erro: ', erro);
             alert('Email e/ou senha invalidos');
-            setLoading(false);
         });
+        setLoading(false);
     }
     return (
         <Container>

@@ -1,31 +1,37 @@
 import { useContext, useEffect } from "react";
+import styled from "styled-components";
+import dayjs from "dayjs";
 
 import Header from "../Header";
-import styled from "styled-components";
 import HabitToday from "./HabitToday";
 import Footer from "../Footer";
+
 import getHabits from "../scripts/getHabits";
+import getTodaysHabits from "../scripts/getTodaysHabits";
+
 import UserContext from "../contexts/userContext";
 import HabitsContext from "../contexts/habitsContext";
+import TodaysHabitsContext from "../contexts/todaysHabitsContext";
 
 export default function TodayPage() {
+    require('dayjs/locale/pt-br');
+    let dayOfTheWeek = dayjs().locale('pt-br').format('dddd, DD/MM');
 
     const { userData} = useContext(UserContext);
     const { arrHabits, setArrHabits } = useContext(HabitsContext);
+    const { todaysHabits, setTodaysHabits } = useContext(TodaysHabitsContext);
+
+    useEffect(() => getTodaysHabits(userData.token, setTodaysHabits), []);
     useEffect(() => getHabits(userData, arrHabits, setArrHabits), []);
-    const habitsToday = [{title : 'ler 1 livro', streak: 4, record: 7},
-        { title: 'ler 1 livro', streak: 4, record: 7 },
-        { title: 'ler 1 livro', streak: 4, record: 7 }
-    ];
 
     return (
             <>
                 <Header />
                 <Container>
-                    <Date>Segunda, 17/05</Date>
+                    <Date>{dayOfTheWeek}</Date>
                     <Status>Nenhum hábito concluído ainda</Status>
                     <Main>
-                        {habitsToday.map( (elem, index) => <HabitToday key={index} info={elem}/>)}
+                        {todaysHabits.map( (elem, index) => <HabitToday key={index} info={elem}/>)}
                     </Main>
 
                 </Container>
