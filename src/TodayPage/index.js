@@ -15,7 +15,7 @@ import HabitsContext from "../contexts/habitsContext";
 import TodaysHabitsContext from "../contexts/todaysHabitsContext";
 
 export default function TodayPage() {
-    
+
     require('dayjs/locale/pt-br');
     let dayOfTheWeek = dayjs().locale('pt-br').format('dddd, DD/MM');
 
@@ -84,4 +84,5 @@ const Status = styled.p`
 
 const Main = styled.div`
     gap: 10px;
+    padding-bottom: 100px;
 `;

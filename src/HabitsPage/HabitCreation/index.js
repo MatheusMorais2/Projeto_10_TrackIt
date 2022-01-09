@@ -6,6 +6,7 @@ import WideInput from "../../styles/wideInput";
 import UserContext from "../../contexts/userContext.js";
 import HabitsContext from "../../contexts/habitsContext";
 import getHabits from "../../scripts/getHabits";
+import LoadingButton from "../../LoadingAnimation";
 
 export default function HabitCreation({ createHabit, setCreateHabit, setShowCreationMenu}) {
     
@@ -68,7 +69,9 @@ export default function HabitCreation({ createHabit, setCreateHabit, setShowCrea
 
                 <Buttons>
                     <Cancel type="reset" onClick={handleCancel} disabled={loading}>Cancelar</Cancel >
-                    <Save type='submit' disabled={loading}>Salvar</Save>
+                    <Save type='submit' disabled={loading} loading={loading}>
+                        {loading ? <LoadingButton /> : 'Salvar'}
+                    </Save>
                 </Buttons>
 
             </form>
@@ -117,6 +120,7 @@ const Save = styled.button`
     font-style: normal;
     font-weight: 400;
     border: none;
+    opacity: ${props => props.loading ? 0.5 : 1};
 `;
 
 const Days = styled.div`

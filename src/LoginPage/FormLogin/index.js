@@ -28,14 +28,15 @@ export default function FormLogin() {
                 image: response.data.image, 
                 token: response.data.token 
             });
-
+            setLoading(false);
             navigate('/hoje', { replace: true });
         });
 
         promise.catch(erro => {
             alert('Email e/ou senha invalidos');
+            setLoading(false);
         });
-        setLoading(false);
+        
     }
     return (
         <Container>
@@ -54,7 +55,7 @@ export default function FormLogin() {
                     type='password'
                 />
             
-                <Button type='submit' disabled={loading}>
+                <Button type='submit' disabled={loading} loading={loading}>
                     {loading ? <LoadingButton /> : 'Entrar'}
                 </Button>
             </form>
@@ -74,6 +75,7 @@ const Button = styled.button`
     border: none;
     border-radius: 5px;
     background-color: #52B6FF;
+    opacity: ${props => props.loading ? 0.5 : 1};
 
     display: flex;
     justify-content: center;
