@@ -14,7 +14,6 @@ export default function App() {
     const [ userData, setUserData] = useState({name: '', image: '', token: ''});
     const [ arrHabits, setArrHabits] = useState([]);
     const [ todaysHabits, setTodaysHabits] = useState([]);
-    console.log(UserContext);
 
     return (
         <UserContext.Provider value={{ userData, setUserData }}>

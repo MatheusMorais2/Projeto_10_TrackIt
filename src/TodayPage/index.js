@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 
@@ -8,18 +8,30 @@ import Footer from "../Footer";
 
 import getHabits from "../scripts/getHabits";
 import getTodaysHabits from "../scripts/getTodaysHabits";
+import returnPercentageDone from "../scripts/returnPercentageDone";
 
 import UserContext from "../contexts/userContext";
 import HabitsContext from "../contexts/habitsContext";
 import TodaysHabitsContext from "../contexts/todaysHabitsContext";
 
 export default function TodayPage() {
+    
     require('dayjs/locale/pt-br');
     let dayOfTheWeek = dayjs().locale('pt-br').format('dddd, DD/MM');
 
     const { userData} = useContext(UserContext);
     const { arrHabits, setArrHabits } = useContext(HabitsContext);
     const { todaysHabits, setTodaysHabits } = useContext(TodaysHabitsContext);
+
+    let percentageDone = returnPercentageDone(todaysHabits);
+    let percentageDonePhrase = '';
+
+    if ((todaysHabits.length > 0) && (percentageDone > 0)) {
+        percentageDonePhrase = `${percentageDone}% dos hábitos concluídos`;
+    } else {
+        percentageDonePhrase = 'Nenhum hábito concluído ainda';
+    }
+    
 
     useEffect(() => getTodaysHabits(userData.token, setTodaysHabits), []);
     useEffect(() => getHabits(userData, arrHabits, setArrHabits), []);
@@ -29,9 +41,9 @@ export default function TodayPage() {
                 <Header />
                 <Container>
                     <Date>{dayOfTheWeek}</Date>
-                    <Status>Nenhum hábito concluído ainda</Status>
+                    <Status>{percentageDonePhrase}</Status>
                     <Main>
-                        {todaysHabits.map( (elem, index) => <HabitToday key={index} info={elem}/>)}
+                        {todaysHabits.map( (elem, index) => <HabitToday key={index} info={elem} />)}
                     </Main>
 
                 </Container>

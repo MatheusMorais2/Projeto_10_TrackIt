@@ -3,11 +3,13 @@ import styled from "styled-components";
 import axios from "axios";
 
 import UserContext from "../../contexts/userContext.js";
+import TodaysHabitsContext from "../../contexts/todaysHabitsContext";
+import getTodaysHabits from "../../scripts/getTodaysHabits.js";
 
 export default function HabitToday( {info} ) {
-    const { userData } = useContext(UserContext);
     const {currentSequence, done, highestSequence, id, name} = info;
-    console.log(id);
+    const { userData } = useContext(UserContext);
+    const { setTodaysHabits } = useContext(TodaysHabitsContext);
     const [ isDone, setIsDone] = useState(done);
 
     let changeTextColor = false;
@@ -15,31 +17,27 @@ export default function HabitToday( {info} ) {
 
     function handleClick() {
         if (isDone) {
-
-            const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
-                {
-                    headers:
-                        { "Authorization": `Bearer ${userData.token}` }
-                }
-            );
+            const promise = axios({
+                method: 'post',
+                url: `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
+                headers: { 'Authorization': `Bearer ${userData.token}` }
+            });
 
             promise.then( ()=> {
-                setIsDone(true);
-                console.log('deu certo mudar de estado done', isDone);
+                setIsDone(false);
+                getTodaysHabits(userData.token, setTodaysHabits);
             });
 
         } else {
-
-            const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
-                {
-                    headers:
-                        { "Authorization": `Bearer ${userData.token}` }
-                }
-            );
+            const promise = axios({
+                method: 'post',
+                url: `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
+                headers: { 'Authorization': `Bearer ${userData.token}` }
+            });
 
             promise.then(() => {
-                setIsDone(false);
-                console.log('deu certo mudar de estado done', isDone);
+                setIsDone(true);
+                getTodaysHabits(userData.token, setTodaysHabits);
             });
         };
     };
@@ -111,7 +109,7 @@ const Check = styled.div`
     font-size: 40px;
     color: #fff;
     .check {
-        stroke-width: 50;
+        stroke-width: 32px;
     }
 `;
 

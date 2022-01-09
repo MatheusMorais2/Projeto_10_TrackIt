@@ -1,7 +1,18 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
+import TodaysHabitsContext from "../contexts/todaysHabitsContext";
+import returnPercentageDone from "../scripts/returnPercentageDone";
+
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 export default function Footer() {
+
+    const { todaysHabits} = useContext(TodaysHabitsContext);
+    let percentageDone = returnPercentageDone(todaysHabits);
+
     return (
         <Fixed>
             <Container>
@@ -11,9 +22,24 @@ export default function Footer() {
                     </Link>
                 </Button>
 
-                <Link to='/hoje'>
-                    <ProgressBar />
-                </Link>
+                <PhantomElement/>
+                <ContainerProgressbar>
+                    <Link to='/hoje'>
+                        <CircularProgressbar 
+                            value={percentageDone} 
+                            text={`Hoje`}
+                            styles={
+                                buildStyles({
+                                    backgroundColor: "#52B6FF",
+                                    textColor: "#fff",
+                                    pathColor: "#fff",
+                                    trailColor: "transparent"
+                                })
+                            } 
+                        />
+                    </Link>
+                </ContainerProgressbar>
+                
 
                 <Button>
                     <Link to='/historico'>
@@ -52,16 +78,21 @@ const Button = styled.button`
     color: #52B6FF;
 `;
 
-const ProgressBar = styled.div`
+const ContainerProgressbar = styled.div`
     width: 91px;
     height: 91px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #52B6FF;
     border-radius: 50%;
+    font-family: 'Lexend Deca';
+    font-weight: 400;
+    font-size: 17.98px;
+    padding: 6px;
     position: absolute;
-    top: -31px;
-    left: 50%;
+    bottom: 10px;
 `;
+
+const PhantomElement = styled.div`
+    width: 50px;
+`;
+
 

@@ -33,7 +33,6 @@ export default function FormLogin() {
         });
 
         promise.catch(erro => {
-            console.log('erro: ', erro);
             alert('Email e/ou senha invalidos');
         });
         setLoading(false);

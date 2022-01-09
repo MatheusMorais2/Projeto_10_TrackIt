@@ -19,7 +19,6 @@ export default function Habit( {info} ) {
             }   
         )
         promise.then(() => getHabits(userData, arrHabits, setArrHabits));
-        promise.catch(erro => console.log('deumerda ',erro));
     }
 
     return (

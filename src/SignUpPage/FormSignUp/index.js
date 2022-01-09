@@ -25,7 +25,6 @@ export default function FormSignUp () {
         });
         
         promise.catch( erro => {
-            console.log('erro: ', erro);
             alert('Falha ao cadastrar');
             setLoading(false);
         });
