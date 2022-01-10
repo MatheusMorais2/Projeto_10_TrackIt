@@ -32,7 +32,7 @@ export default function FormLogin() {
             navigate('/hoje', { replace: true });
         });
 
-        promise.catch(erro => {
+        promise.catch(() => {
             alert('Email e/ou senha invalidos');
             setLoading(false);
         });
